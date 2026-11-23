@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "packleak"
+version = "0.1.0"
+description = "See what your npm package, wheel or build output would leak before you ship it: source maps with your original source, secrets in bundles, .env files, keys, .git."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = []
+authors = [{ name = "Jatin Garg" }]
+keywords = ["sourcemap", "npm", "secrets", "prepublish", "security"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+packleak = "packleak.cli:main"
+
+[tool.setuptools]
+packages = ["packleak"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
