@@ -1,0 +1,57 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: npm --version
+      - run: python -m pip install -e '.[test]'
+      - run: python -m pytest -v
+  readme-examples:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - name: README output blocks match real output
+        run: python scripts/check_readme.py
+  real-bundler:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install .
+      - name: esbuild with --sourcemap ships the source -> packleak exits 1; without it -> exit 0
+        run: bash scripts/bundler_e2e.sh
+  self-check:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: build packleak's own wheel and sdist and scan them
+        run: |
+          python -m pip install build
+          python -m build
+          python -m pip install dist/*.whl
+          packleak dist/*.whl
+          packleak dist/*.tar.gz

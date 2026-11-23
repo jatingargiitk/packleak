@@ -1,0 +1,12 @@
+{
+  "name": "greet-lib",
+  "version": "1.0.0",
+  "description": "tiny greeting helper (the same package after a files allowlist)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/*.map"
+  ],
+  "license": "MIT"
+}

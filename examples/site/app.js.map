@@ -1,0 +1,13 @@
+{
+  "version": 3,
+  "file": "app.js",
+  "sourceRoot": "/Users/dev/work/site/",
+  "sources": [
+    "src/app.ts"
+  ],
+  "sourcesContent": [
+    "const token = process.env.SESSION;\nconsole.log(\"ok\");\n"
+  ],
+  "names": [],
+  "mappings": "AAAA"
+}
