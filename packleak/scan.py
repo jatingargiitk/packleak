@@ -150,7 +150,7 @@ def analyze_map(raw_text, path, inline_in=None):
 
     rule = "INLINE_SOURCEMAP" if inline_in else "SOURCEMAP_CONTENT"
     if first:
-        lines = sum(b.count("\n") + 1 for _, b in first)
+        lines = sum(len(b.splitlines()) for _, b in first)
         shown = ", ".join(n for n, _ in first[:3]) + (", ..." if len(first) > 3 else "")
         detail = "embeds the original source of %d file%s (%d lines): %s" % (
             len(first), "" if len(first) == 1 else "s", lines, shown)

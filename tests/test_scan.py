@@ -45,7 +45,7 @@ def write_tree(root, files):
 def test_map_with_first_party_source_is_high():
     f = analyze_map(smap(["../src/a.ts", "../src/b.ts"], ["x\ny\n", "z"]), "dist/a.js.map")
     assert [(x.severity, x.rule) for x in f] == [("high", "SOURCEMAP_CONTENT")]
-    assert "2 files (4 lines)" in f[0].detail
+    assert "2 files (3 lines)" in f[0].detail
     assert "../src/a.ts, ../src/b.ts" in f[0].detail
 
 
